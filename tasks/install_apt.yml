@@ -1,0 +1,29 @@
+---
+- name: Add PowerDNS APT key
+  apt_key:
+    url: https://repo.powerdns.com/FD380FBB-pub.asc
+
+- name: Add the PowerDNS Authoritative Apt repository
+  apt_repository:
+    repo: deb http://repo.powerdns.com/ubuntu {{ ansible_distribution_release }}-auth-{{ pdns_auth_repo_ver }} main
+    filename: pdns-authoritative
+
+- name: Pin pdns packages
+  copy:
+    dest: /etc/apt/preferences.d/pdns
+    content: >
+      Package: pdns-*
+      Pin: origin repo.powerdns.com
+      Pin-Priority: 600
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Update repositories cache
+  apt:
+    update_cache: yes
+  changed_when: false
+
+- name: Install the PowerDNS Authoritative server
+  apt:
+    name: pdns-server

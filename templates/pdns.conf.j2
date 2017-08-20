@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+
+{% for k,v in pdns_auth_config.items() %}
+{{ k }}={{ v }}
+{% endfor %}
