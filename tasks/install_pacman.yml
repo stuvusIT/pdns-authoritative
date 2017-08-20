@@ -1,0 +1,10 @@
+---
+- name: Update repositories cache
+  pacman:
+    update_cache: yes
+  changed_when: false
+
+- name: Install required packages
+  pacman:
+    name: powerdns
+

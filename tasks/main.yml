@@ -1,0 +1,28 @@
+---
+- include: install_apt.yml
+  static: no
+  when: ansible_pkg_mgr == "apt"
+
+- include: install_pacman.yml
+  static: no
+  when: ansible_pkg_mgr == "pacman"
+
+- name: Create configuration file
+  template:
+    src: pdns.conf.j2
+    dest: /etc/powerdns/pdns.conf
+    mode: 0640
+    owner: root
+    group: root
+  notify: Restart PowerDNS
+
+- name: Enable PowerDNS
+  service:
+    name: pdns.service
+    enabled: yes
+
+- name: Start PowerDNS
+  service:
+    name: pdns.service
+    state: started
+  register: pdns_start

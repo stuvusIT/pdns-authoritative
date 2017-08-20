@@ -1,0 +1,6 @@
+---
+- name: Restart PowerDNS
+  service:
+    name: pdns.service
+    state: restarted
+  when: not pdns_start.changed and not pdns_auth_no_restart
