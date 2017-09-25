@@ -16,13 +16,38 @@
     group: root
   notify: Restart PowerDNS
 
+- name: Create PowerDNS override directory
+  file:
+    path: /etc/systemd/system/pdns.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: pdns_auth_config.chroot is defined
+
+- name: Create PowerDNS override file
+  template:
+    src: pdns-chroot-resolv.conf.j2
+    dest: /etc/systemd/system/pdns.service.d/chroot-resolv.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: pdns_auth_config.chroot is defined
+
+- name: Remove PowerDNS override file
+  file:
+    path: /etc/systemd/system/pdns.service.d/chroot-resolv.conf
+    state: absent
+  when: pdns_auth_config.chroot is not defined
+
 - name: Enable PowerDNS
   service:
     name: pdns.service
     enabled: yes
 
 - name: Start PowerDNS
-  service:
+  systemd:
+    daemon_reload: yes
     name: pdns.service
     state: started
   register: pdns_start
