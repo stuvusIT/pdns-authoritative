@@ -1,0 +1,4 @@
+[Service]
+PermissionsStartOnly=true
+ExecStartPre=/bin/install -dm755 "{{ pdns_auth_config.chroot }}/etc"
+ExecStartPre=/bin/cp -afL /etc/resolv.conf "{{ pdns_auth_config.chroot }}/etc/resolv.conf"
