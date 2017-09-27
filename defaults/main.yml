@@ -1,4 +1,4 @@
 ---
-pdns_auth_repo_ver: 40
+pdns_auth_repo_ver: 41
 pdns_auth_no_restart: false
 pdns_auth_config: {}
