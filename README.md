@@ -11,7 +11,7 @@ Arch Linux or Ubuntu
 
 | Name                   | Default/Required | Description                                                                       |
 |------------------------|:----------------:|-----------------------------------------------------------------------------------|
-| `pdns_auth_repo_ver`   | `40`             | Version of the apt repository for PowerDNS (Ubuntu only)                          |
+| `pdns_auth_repo_ver`   | `41`             | Version of the apt repository for PowerDNS (Ubuntu only)                          |
 | `pdns_auth_config`     |                  | Configuration dict of PowerDNS                                                    |
 | `pdns_auth_no_restart` | `false`          | Set this to true to prevent pdns from being restarted after configuration changes |
 
