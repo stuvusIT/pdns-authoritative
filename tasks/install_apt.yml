@@ -24,6 +24,9 @@
     update_cache: yes
   changed_when: false
 
-- name: Install the PowerDNS Authoritative server
+- name: Install the PowerDNS Authoritative server packages
   apt:
-    name: pdns-server
+    name: "{{ item }}"
+  with_items:
+    - pdns-server
+    - dnsutils
