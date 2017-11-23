@@ -29,4 +29,5 @@
     name: "{{ item }}"
   with_items:
     - pdns-server
+    - pdns-backend-pgsql
     - dnsutils

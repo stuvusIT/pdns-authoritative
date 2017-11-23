@@ -9,5 +9,6 @@
     name: "{{ item }}"
   with_items:
     - powerdns
+    - postgresql-libs
     - bind-tools
 
