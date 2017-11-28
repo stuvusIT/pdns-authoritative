@@ -1,6 +1,8 @@
 # {{ ansible_managed }}
 
 [Service]
+# Cannot use Type=notify in chroot
+Type=simple
 PermissionsStartOnly=true
-ExecStartPre=/bin/install -dm755 "{{ pdns_auth_config.chroot }}/etc"
+ExecStartPre=/usr/bin/install -dm755 "{{ pdns_auth_config.chroot }}/etc"
 ExecStartPre=/bin/cp -afL /etc/resolv.conf "{{ pdns_auth_config.chroot }}/etc/resolv.conf"
