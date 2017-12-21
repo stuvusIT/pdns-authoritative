@@ -5,7 +5,7 @@
 
 - name: Add the PowerDNS Authoritative Apt repository
   apt_repository:
-    repo: deb http://repo.powerdns.com/ubuntu {{ ansible_distribution_release }}-auth-{{ pdns_auth_repo_ver }} main
+    repo: deb http://repo.powerdns.com/{{ ansible_os_family | lower }} {{ ansible_distribution_release }}-auth-{{ pdns_auth_repo_ver }} main
     filename: pdns-authoritative
 
 - name: Pin pdns packages
