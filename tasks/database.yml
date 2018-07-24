@@ -1,0 +1,40 @@
+---
+- name: Create PostgreSQL user
+  postgresql_user:
+    name: "{{ pdns_auth_postgres_user }}"
+    role_attr_flags: LOGIN
+    # Connection to postgres
+    login_host: "{{ pdns_auth_postgres_login_host }}"
+    login_user: "{{ pdns_auth_postgres_login_user }}"
+    login_password: "{{ pdns_auth_postgres_login_password | default(omit) }}"
+
+- name: Create PostgreSQL database
+  postgresql_db:
+    name: "{{ pdns_auth_postgres_database }}"
+    owner: "{{ pdns_auth_postgres_user }}"
+    # Connection to postgres
+    login_host: "{{ pdns_auth_postgres_login_host }}"
+    login_user: "{{ pdns_auth_postgres_login_user }}"
+    login_password: "{{ pdns_auth_postgres_login_password | default(omit) }}"
+
+- name: Check if schema is already imported
+  command: >
+    psql -H "{{ pdns_auth_postgres_login_host }}"
+    -U "{{ pdns_auth_postgres_user }}"
+    -d "{{ pdns_auth_postgres_database }}"
+    -c "select * from domains"
+  environment:
+    PGPASSWORD: "{{ pdns_auth_postgres_login_password | default(omit) }}"
+  register: db_imported
+  failed_when: false
+  changed_when: false
+
+- name: Import schema
+  command: >
+    psql -H "{{ pdns_auth_postgres_login_host }}"
+    -U "{{ pdns_auth_postgres_user }}"
+    -d "{{ pdns_auth_postgres_database }}"
+    -f /usr/share/doc/pdns-backend-pgsql/schema.pgsql.sql
+  environment:
+    PGPASSWORD: "{{ pdns_auth_postgres_login_password | default(omit) }}"
+  when: db_imported.rc != 0

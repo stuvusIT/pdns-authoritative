@@ -5,6 +5,9 @@
 - include_tasks: install_pacman.yml
   when: ansible_pkg_mgr == "pacman"
 
+- include_tasks: database.yml
+  when: pdns_auth_configure_postgres
+
 - name: Create configuration file
   template:
     src: pdns.conf.j2
