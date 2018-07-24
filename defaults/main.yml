@@ -2,3 +2,8 @@
 pdns_auth_repo_ver: 41
 pdns_auth_no_restart: false
 pdns_auth_config: {}
+pdns_auth_configure_postgres: true
+pdns_auth_postgres_login_host: localhost
+pdns_auth_postgres_login_user: postgres
+pdns_auth_postgres_user: pdns
+pdns_auth_postgres_database: pdns
