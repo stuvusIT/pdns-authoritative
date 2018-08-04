@@ -1,9 +1,32 @@
 ---
-- include_tasks: install_apt.yml
-  when: ansible_pkg_mgr == "apt"
+- name: Add PowerDNS APT key
+  apt_key:
+    url: https://repo.powerdns.com/FD380FBB-pub.asc
 
-- include_tasks: install_pacman.yml
-  when: ansible_pkg_mgr == "pacman"
+- name: Add the PowerDNS Authoritative Apt repository
+  apt_repository:
+    repo: deb http://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-auth-{{ pdns_auth_repo_ver }} main
+    filename: pdns-authoritative
+    update_cache: true
+
+- name: Pin pdns packages
+  copy:
+    dest: /etc/apt/preferences.d/pdns
+    content: >
+      Package: pdns-*
+      Pin: origin repo.powerdns.com
+      Pin-Priority: 600
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Install the PowerDNS Authoritative server packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - pdns-server
+    - pdns-backend-pgsql
+    - dnsutils
 
 - include_tasks: database.yml
   when: pdns_auth_configure_postgres
