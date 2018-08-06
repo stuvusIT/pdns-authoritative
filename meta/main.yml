@@ -11,14 +11,9 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - xenial
-    - yakkety
   - name: Debian
     versions:
-    - jessie
-  - name: ArchLinux
-    versions:
-    - all
-    - any
+    - stretch
 
 
   galaxy_tags:
