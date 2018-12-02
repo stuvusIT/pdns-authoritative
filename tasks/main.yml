@@ -22,11 +22,10 @@
 
 - name: Install the PowerDNS Authoritative server packages
   apt:
-    name: "{{ item }}"
-  with_items:
-    - pdns-server
-    - pdns-backend-pgsql
-    - dnsutils
+    name:
+      - pdns-server
+      - pdns-backend-pgsql
+      - dnsutils
 
 - include_tasks: database.yml
   when: pdns_auth_configure_postgres
