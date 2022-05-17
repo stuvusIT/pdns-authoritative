@@ -5,7 +5,7 @@ pdns is automatically restarted after configuration changes, unless the role var
 
 ## Requirements
 
-Debian or Ubuntu
+Debian 11 (Bullseye)
 
 ## Role Variables
 
