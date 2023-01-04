@@ -73,3 +73,11 @@
     name: pdns.service
     state: started
   register: pdns_start
+
+- name: Generate TSIG Key
+  when: pdns_auth_tsig_key_name is defined
+  command:
+    cmd: pdnsutil generate-tsig-key {{pdns_auth_tsig_key_name}} hmac-sha256
+  register: create_key
+  changed_when: "'Create new TSIG key' in create_key.stdout"
+  failed_when: "create_key.rc != 0 and 'duplicate key value violates unique constraint' not in create_key.stderr"
