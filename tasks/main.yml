@@ -1,7 +1,7 @@
 ---
 - name: Add PowerDNS APT key
   apt_key:
-    url: https://repo.powerdns.com/FD380FBB-pub.asc
+    url: https://repo.powerdns.com/CBC8B383-pub.asc
 
 - name: Add the PowerDNS Authoritative Apt repository
   apt_repository:
